@@ -30,7 +30,7 @@ DB_PASSWORD={手順1で設定したMYSQL_PASSWORDの値}
 ### Laravelのコンテナ内で `composer install` 実行
 junChannelディレクトリ配下で、以下コマンドを実行
 ```
-$ docker-compose eec app bash
+$ docker-compose exec app bash
 # cd src
 # composer install
 # composer dump-autoload
