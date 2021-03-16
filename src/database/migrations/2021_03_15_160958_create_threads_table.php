@@ -16,10 +16,10 @@ class CreateThreadsTable extends Migration
         Schema::create('threads', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creater_id')->index();
-            $table->srting('name', 30)->index();
+            $table->string('name', 30)->index();
             $table->integer('category_id')->nullable()->index();
             $table->timestamps();
-            $table->srting('update_reason', 255)>nullable();
+            $table->string('update_reason', 255)>nullable();
 
             $table->foreign('creater_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('categories');
