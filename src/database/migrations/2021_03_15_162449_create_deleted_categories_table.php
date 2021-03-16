@@ -15,9 +15,8 @@ class CreateDeletedCategoriesTable extends Migration
     {
         Schema::create('deleted_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->srting('name');
-            $table->dateTime('created_at');
-            $table->dateTime('deleted_at');
+            $table->srting('name', 20);
+            $table->timestamps();
         });
     }
 

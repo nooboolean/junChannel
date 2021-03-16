@@ -17,6 +17,9 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->integer('comment_id');
             $table->integer('reporter_id');
+
+            $table->foreign('comment_id')->references('id')->on('comments');
+            $table->foreign('reporter_id')->references('id')->on('users');
         });
     }
 
