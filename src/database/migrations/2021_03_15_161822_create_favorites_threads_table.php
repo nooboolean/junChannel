@@ -15,9 +15,12 @@ class CreateFavoritesThreadsTable extends Migration
     {
         Schema::create('favorites_threads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->index();
             $table->integer('thread_id');
-            $table->dateTime('created_at');
+            $table->dateTime('created_at', 8);
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('thread_id')->references('id')->on('threads');
         });
     }
 

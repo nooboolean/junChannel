@@ -16,13 +16,12 @@ class CreateDeletedThreadsTable extends Migration
         Schema::create('deleted_threads', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creater_id');
-            $table->srting('name');
-            $table->integer('category_id');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            $table->srting('update_reason');
-            $table->dateTime('deleted_at');
-            $table->srting('delete_reason');
+            $table->srting('name', 30);
+            $table->integer('category_id')->nullable();
+            $table->timestamps();
+            $table->srting('update_reason', 255)->nullable();
+            $table->dateTime('deleted_at', 8)->nullable();
+            $table->srting('delete_reason', 255)->nullable();
         });
     }
 

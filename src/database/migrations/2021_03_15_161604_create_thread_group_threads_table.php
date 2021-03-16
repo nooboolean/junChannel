@@ -17,6 +17,9 @@ class CreateThreadGroupThreadsTable extends Migration
             $table->increments('id');
             $table->integer('thread_group_id');
             $table->integer('thread_id');
+
+            $table->foreign('thread_group_id')->references('id')->on('thread_group');
+            $table->foreign('thread_id')->references('id')->on('threads');
         });
     }
 

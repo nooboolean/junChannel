@@ -17,11 +17,14 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->integer('commenter_id');
             $table->integer('guests_commenter_id');
-            $table->integer('thread_id');
-            $table->integer('comment_number');
-            $table->srting('content');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->integer('thread_id')->index();
+            $table->integer('comment_number')->index();
+            $table->srting('content', 1000);
+            $table->timestamps();
+
+            $table->foreign('commenter_id')->references('id')->on('users');
+            $table->foreign('guests_commenter_id')->references('identify_key')->on('guests');
+            $table->foreign('thread_id')->references('id')->on('threads');
         });
     }
 
