@@ -19,9 +19,8 @@ class CreateDeletedCommentsTable extends Migration
             $table->integer('guests_commenter_id');
             $table->integer('thread_id');
             $table->integer('comment_number');
-            $table->srting('content');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->srting('content', 1000);
+            $table->timestamps();
             $table->dateTime('deleted_at');
         });
     }
