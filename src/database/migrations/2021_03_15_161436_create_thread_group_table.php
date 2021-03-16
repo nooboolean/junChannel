@@ -14,7 +14,7 @@ class CreateThreadGroupTable extends Migration
     public function up()
     {
         Schema::create('thread_group', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name', 255);
         });
     }

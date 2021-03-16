@@ -14,7 +14,7 @@ class CreateDeletedCommentsTable extends Migration
     public function up()
     {
         Schema::create('deleted_comments', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('commenter_id');
             $table->integer('guests_commenter_id');
             $table->integer('thread_id');

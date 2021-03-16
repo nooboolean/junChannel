@@ -14,9 +14,9 @@ class CreateFavoritesCategoriesTable extends Migration
     public function up()
     {
         Schema::create('favorites_categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->index();
-            $table->integer('category_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id');
             $table->dateTime('created_at');
 
             $table->foreign('user_id')->references('id')->on('users');

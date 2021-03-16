@@ -14,7 +14,7 @@ class CreateCategoriesThreadsTable extends Migration
     public function up()
     {
         Schema::create('categories_threads', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('category_id');
             $table->integer('thread_id');
         });

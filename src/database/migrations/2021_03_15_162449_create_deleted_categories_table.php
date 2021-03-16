@@ -14,7 +14,7 @@ class CreateDeletedCategoriesTable extends Migration
     public function up()
     {
         Schema::create('deleted_categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name', 20);
             $table->timestamps();
         });

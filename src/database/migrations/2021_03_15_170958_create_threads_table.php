@@ -14,12 +14,12 @@ class CreateThreadsTable extends Migration
     public function up()
     {
         Schema::create('threads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('creater_id')->index();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('creater_id')->index();
             $table->string('name', 30)->index();
-            $table->integer('category_id')->nullable()->index();
+            $table->unsignedBigInteger('category_id')->nullable()->index();
             $table->timestamps();
-            $table->string('update_reason', 255)>nullable();
+            $table->string('update_reason', 255)->nullable();
 
             $table->foreign('creater_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('categories');

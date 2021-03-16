@@ -14,9 +14,9 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('comment_id');
-            $table->integer('reporter_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('comment_id');
+            $table->unsignedBigInteger('reporter_id');
 
             $table->foreign('comment_id')->references('id')->on('comments');
             $table->foreign('reporter_id')->references('id')->on('users');
