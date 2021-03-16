@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->integer('guests_commenter_id');
             $table->integer('thread_id')->index();
             $table->integer('comment_number')->index();
-            $table->srting('content', 1000);
+            $table->string('content', 1000);
             $table->timestamps();
 
             $table->foreign('commenter_id')->references('id')->on('users');
