@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//※laravel8から名前空間も記述しないとルーティングエラーとなる
+
+//会員登録ページ
+Route::get('signup', 'App\Http\Controllers\SignupController@index');
+Route::post('signup', 'App\Http\Controllers\SignupController@post');
+
+Route::post('signup_done', 'App\Http\Controllers\SignupdoneController@post');
