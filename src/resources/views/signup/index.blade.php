@@ -3,16 +3,16 @@
     
     <form method="POST" action="/signup">
         @csrf
-        <p>{{$email_title}}</p>
+        <p>メールアドレス（必須）</p>
         <input type="text" name="email" required>
 
-        <p>{{$password_title}}</p>
+        <p>パスワード（必須）</p>
         <input type="password" name="password" required>
 
-        <p>{{$nickname_title}}</p>
+        <p>ニックネーム（任意）</p>
         <input type="text" name="nickname">
 
-        <p>{{$icon_title}}</p>
+        <p>アイコン（任意）</p>
         <input type="file" name="icon">
 
         <br/>
