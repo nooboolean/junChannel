@@ -8,9 +8,6 @@
         <p>メールアドレス（必須）</p>
         <p>{{$email}}</p>
 
-        <p>パスワード（必須）</p>
-        <p>{{$password}}</p>
-
         <p>ニックネーム（任意）</p>
         @if ($nickname != "")
         <p>{{$nickname}}</p>
