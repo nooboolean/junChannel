@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class SignUpController extends Controller
 {
@@ -33,7 +34,7 @@ class SignUpController extends Controller
 
         $data = [
                 'email'=>$request->email,
-                'password'=>$request->password,
+                'password'=>Hash::make($request->password),
                 'nickname'=>$request->nickname,
                 'icon_image_path'=>$request->icon,
         ];
