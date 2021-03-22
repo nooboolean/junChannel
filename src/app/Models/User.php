@@ -9,4 +9,8 @@ class User extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'email', 'password','nickname', 'icon_image_path',
+    ];
 }
