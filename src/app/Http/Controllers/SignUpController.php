@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class SignUpController extends Controller
 {
@@ -39,9 +39,14 @@ class SignUpController extends Controller
                 'nickname'=>$request->nickname,
                 'icon_image_path'=>$request->icon,
         ];
-
         Log::debug($data);
-        DB::insert('insert into users (email, password, nickname, icon_image_path) values (:email, :password, :nickname,  :icon_image_path)', $data);
+
+        $user = new User;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->nickname = $request->nickname;
+        $user->icon_image_path = $request->icon;
+        $user->save();
 
         return view('signup.complete', $data);
     }
