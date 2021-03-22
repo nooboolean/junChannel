@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class SignUpController extends Controller
 {
@@ -26,7 +27,7 @@ class SignUpController extends Controller
 
         Log::debug($data);
 
-        return view('signup.result', $data);
+        return view('signup.confirm', $data);
     }
 
     public function complete(Request $request)
@@ -40,6 +41,7 @@ class SignUpController extends Controller
         ];
 
         Log::debug($data);
+        DB::insert('insert into users (email, password, nickname, icon_image_path) values (:email, :password, :nickname,  :icon_image_path)', $data);
 
         return view('signup.complete', $data);
     }
