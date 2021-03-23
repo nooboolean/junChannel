@@ -13,7 +13,7 @@
         <input type="text" name="nickname">
 
         <p>アイコン（任意）</p>
-        <input type="file" name="icon_image_path">
+        <input type="file" name="icon">
 
         <br/>
         <br/>

@@ -30,7 +30,7 @@
         <input type="hidden" name="email" value={{$email}}>
         <input type="hidden" name="password" value={{$password}}>
         <input type="hidden" name="nickname" value={{$nickname}}>
-        <input type="hidden" name="icon_image_path" value={{$icon_image_path}}>
+        <input type="hidden" name="icon" value={{$icon_image_path}}>
 
         <input type="submit" value="確定">
 
