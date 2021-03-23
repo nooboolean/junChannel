@@ -19,12 +19,6 @@ class SignUpController extends Controller
 
     public function create(SignUpRequest $request)
     {
-        // $validate_rule = [
-        //     'email' => 'required|email',
-        //     'password' => 'required|string|max:20',
-        //     'nickname' => 'max:20',
-        // ];
-        // $this->validate($request, $validate_rule);
         $data = [
                 'email'=>$request->email,
                 'password'=>$request->password,
