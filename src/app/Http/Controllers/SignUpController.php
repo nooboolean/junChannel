@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Requests\SignUpRequest;
+
 
 class SignUpController extends Controller
 {
@@ -15,8 +17,14 @@ class SignUpController extends Controller
         return view('signup.index');
     }
 
-    public function create(Request $request)
+    public function create(SignUpRequest $request)
     {
+        // $validate_rule = [
+        //     'email' => 'required|email',
+        //     'password' => 'required|string|max:20',
+        //     'nickname' => 'max:20',
+        // ];
+        // $this->validate($request, $validate_rule);
         $data = [
                 'email'=>$request->email,
                 'password'=>$request->password,
