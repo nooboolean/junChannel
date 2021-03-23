@@ -23,7 +23,7 @@ class SignUpController extends Controller
                 'nickname'=>$request->nickname,
                 'icon_image_path'=>$request->icon_image_path,
         ];
-        Log::debug($data);
+        Log::info('ユーザー作成時のリクエストパラメータ：', $data);
         return view('signup.confirm', $data);
     }
 
@@ -35,7 +35,8 @@ class SignUpController extends Controller
             'nickname' => $request->nickname,
             'icon_image_path' => $request->icon_image_path,
         ]);
-        Log::debug($user);
+        Log::info('ユーザー登録直後のリクエストパラメータ：');
+        Log::info($user);
         return view('signup.complete', $user);
     }
 }
