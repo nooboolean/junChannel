@@ -29,14 +29,13 @@ class SignUpController extends Controller
 
     public function complete(Request $request)
     {
-        $user = new User;
-        $data = $user->create([
+        $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'nickname' => $request->nickname,
             'icon_image_path' => $request->icon_image_path,
         ]);
-        Log::debug($data);
-        return view('signup.complete', $data);
+        Log::debug($user);
+        return view('signup.complete', $user);
     }
 }
