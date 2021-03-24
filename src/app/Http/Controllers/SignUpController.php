@@ -19,23 +19,25 @@ class SignUpController extends Controller
 
     public function create(SignUpRequest $request)
     {
+        $validatedRequest = $request->validated();
         $data = [
-                'email'=>$request->email,
-                'password'=>$request->password,
-                'nickname'=>$request->nickname,
-                'icon_image_path'=>$request->icon_image_path,
+            'email'=>$validatedRequest['email'],
+            'password'=>$validatedRequest['password'],
+            'nickname'=>$validatedRequest['nickname'],
+            'icon_image_path'=>$request->icon_image_path,
         ];
         Log::info('ユーザー作成時のリクエストパラメータ：', $data);
         return view('signup.confirm', $data);
     }
 
-    public function complete(Request $request)
+    public function complete(SignUpRequest $request)
     {
+        $validatedRequest = $request->validated();
         $user = User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'nickname' => $request->nickname,
-            'icon_image_path' => $request->icon_image_path,
+            'email'=>$validatedRequest['email'],
+            'password'=>Hash::make($validatedRequest['password']),
+            'nickname'=>$validatedRequest['nickname'],
+            'icon_image_path'=>$request->icon_image_path,
         ]);
         Log::info('ユーザー登録直後のリクエストパラメータ：');
         Log::info($user);

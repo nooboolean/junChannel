@@ -13,7 +13,7 @@ class SignUpRequest extends FormRequest
      */
     public function authorize()
     {
-        if ($this->path() ==  'signup')
+        if ($this->path() ==  'signup' || $this->path() == 'signup/complete')
         {
             return true;
         } else {
@@ -29,9 +29,9 @@ class SignUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|max:20',
-            'nickname' => 'max:20',
+            'email' => 'required|email|unique:users,email|string',
+            'password' => 'required|min:8|max:20|string',
+            'nickname' => 'max:20|string|nullable',
         ];
     }
 
@@ -42,7 +42,9 @@ class SignUpRequest extends FormRequest
     return [
         'email.required' => 'メールアドレスは必ず入力して下さい。',
         'email.email'  => 'メールアドレスの形式で入力してください。',
+        'email.unique'  => 'このメールアドレスは既に登録されています。',
         'password.required' => 'パスワードは必ず入力して下さい。',
+        'password.min' => 'パスワードは8文字以上にして下さい。',
         'password.max' => 'パスワードは20文字以内にして下さい。',
         'nickname.max' => 'ニックネームは20文字以内にして下さい。',
     ];
