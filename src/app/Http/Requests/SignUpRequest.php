@@ -15,12 +15,7 @@ class SignUpRequest extends FormRequest
      */
     public function authorize()
     {
-        if ($this->path() ==  'signup' || $this->path() == 'signup/complete')
-        {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -32,8 +27,8 @@ class SignUpRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users,email|string',
-            'password' => ['required','min:8','max:20','string',new Hankaku],
-            'nickname' => 'max:20|string|nullable',
+            'password' => ['required', 'min:8', 'max:20', 'string', new Hankaku],
+            'nickname' => 'max:20|string|nullable ',
         ];
     }
 
