@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use App\Rules\Hankaku;
+
 class SignUpRequest extends FormRequest
 {
     /**
@@ -30,7 +32,7 @@ class SignUpRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users,email|string',
-            'password' => 'required|min:8|max:20|string',
+            'password' => ['required','min:8','max:20','string',new Hankaku],
             'nickname' => 'max:20|string|nullable',
         ];
     }
@@ -43,10 +45,13 @@ class SignUpRequest extends FormRequest
         'email.required' => 'メールアドレスは必ず入力して下さい。',
         'email.email'  => 'メールアドレスの形式で入力してください。',
         'email.unique'  => 'このメールアドレスは既に登録されています。',
+        'email.string'  => '正しい形式で入力してください。',
         'password.required' => 'パスワードは必ず入力して下さい。',
         'password.min' => 'パスワードは8文字以上にして下さい。',
         'password.max' => 'パスワードは20文字以内にして下さい。',
+        'password.string' => '正しい形式で入力してください。',
         'nickname.max' => 'ニックネームは20文字以内にして下さい。',
+        'nickname.string'  => '正しい形式で入力してください。',
     ];
     }
 }
