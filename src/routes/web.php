@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//会員登録ページ
+Route::get('signup', 'App\Http\Controllers\SignUpController@index');
+Route::post('signup', 'App\Http\Controllers\SignUpController@create');
+Route::post('signup/complete', 'App\Http\Controllers\SignUpController@complete');
