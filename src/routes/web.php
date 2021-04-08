@@ -22,3 +22,7 @@ Route::get('/', function () {
 Route::get('signup', 'App\Http\Controllers\SignUpController@index');
 Route::post('signup', 'App\Http\Controllers\SignUpController@create');
 Route::post('signup/complete', 'App\Http\Controllers\SignUpController@complete');
+
+//ログインページ
+Route::get('signin', 'App\Http\Controllers\SignInController@index');
+Route::post('signin', 'App\Http\Controllers\SignInController@signin');
