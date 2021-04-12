@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\SignInRequest;
+
+use Auth;
 
 class SignInController extends Controller
 {
@@ -15,24 +16,25 @@ class SignInController extends Controller
         return view('signin.index');
     }
 
-    public function signin(SignInRequest $request)
+    public function authenticate(SignInRequest $request)
     {
         $validatedRequest = $request->validated();
         Log::info('ログイン時のリクエストパラメータ：', $validatedRequest);
 
-        
+
         //ログイン認証
-        if(Auth::attempt(['email' => $validatedRequest['email'], 'password' => $validatedRequest['password']])){
-            // 認証に成功した
+        if(Auth::guard('user')->attempt(['email' => $validatedRequest['email'], 'password' => $validatedRequest['password']])){
             return redirect()->intended('top');
         }
-        dd("あ添付");
 
-
-        //エラー時
         $errors = 'ログインに失敗しました。';
-        //return redirect()->back();
-        return view('signin.index',['errors' => $errors]);
+        return view('signin.index', ['errors' => $errors]);
+    }
+
+    public function signout()
+    {
+        Auth::guard('user')->logout();
+        return redirect('/signin');
     }
 
 

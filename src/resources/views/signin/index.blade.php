@@ -1,7 +1,7 @@
 <body>
     <h1>ログイン</h1>
-    
-    @if (count($errors) > 0)
+
+    @if (!empty($errors))
         <p>メールアドレス、またはパスワードが違います。</p>
     @endif
 
