@@ -11,9 +11,10 @@ use Auth;
 
 class SignInController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('signin.index');
+        $authRequired = $request->authRequired;
+        return view('signin.index', compact('authRequired'));
     }
 
     public function authenticate(SignInRequest $request)
@@ -27,8 +28,8 @@ class SignInController extends Controller
             return redirect()->intended('top');
         }
 
-        $errors = 'ログインに失敗しました。';
-        return view('signin.index', ['errors' => $errors]);
+        $signinError = true;
+        return view('signin.index', compact('signinError'));
     }
 
     public function signout()

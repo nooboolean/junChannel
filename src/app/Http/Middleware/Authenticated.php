@@ -22,6 +22,7 @@ class Authenticated
             return $next($request);
         }
 
-        return redirect()->route('signin')->with('errors', '権限がありません');
+        $authRequired = true;
+        return redirect()->route('signin', compact('authRequired'));
     }
 }

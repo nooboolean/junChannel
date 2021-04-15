@@ -1,7 +1,12 @@
 <body>
     <h1>ログイン</h1>
 
-    @if (!empty($errors))
+    {{-- ログインが必要な画面に遷移しようとした際のメッセージ --}}
+    @if (!empty($authRequired))
+        <p>この先はログインが必要です</p>
+    @endif
+    {{-- ログイン失敗もしくはログインバリデーション失敗時のエラー --}}
+    @if ($errors->any() || !empty($signinError))
         <p>メールアドレス、またはパスワードが違います。</p>
     @endif
 
