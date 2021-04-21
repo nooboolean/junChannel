@@ -1,5 +1,9 @@
-<body>
-    <h1>トップ</h1>
-    
-    
- </body>
+@extends('layout.app')
+
+@section('title', 'トップ')
+@include('layout.header')
+@include('layout.footer')
+
+@section('content')
+<h1>トップページです</h1>
+@endsection

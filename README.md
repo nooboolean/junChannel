@@ -66,6 +66,14 @@ $ docker-compose exec app bash
 # cd src
 # php artisan migrate
 ```
+### css/javascriptが修正された
+junChannelディレクトリ配下で、以下コマンドを実行
+(css/javascriptのコンパイル実行)
+```
+$ docker-compose exec app bash
+# cd src
+# npm run dev
+```
 ### composer.jsonが修正された
 junChannelディレクトリ配下で、以下コマンドを実行
 ```
