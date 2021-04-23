@@ -9,10 +9,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">　
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#">
+                        スレッドの作成
+                    </a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -22,11 +21,11 @@
                 </form>
 
                 @if ( Auth::guard('user')->check() )
-                    <?php $nickname = Auth::guard('user')->user()->nickname; ?>
+                    <?php $user = Auth::guard('user')->user(); ?>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            @if (!empty($nickname))
-                                {{ $nickname }}
+                            @if (!empty($user->nickname))
+                                {{ $user->nickname }}
                             @else
                                 名無し
                             @endif
@@ -34,12 +33,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {{ Auth::guard('user')->user()->email }} {{-- TODO:メアド表示の有無は後で検討する --}}
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('signout') }}">Signout</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          通知
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
                     </li>
                 @else
                     <li class="nav-item">
