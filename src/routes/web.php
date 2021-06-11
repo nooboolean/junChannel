@@ -27,6 +27,9 @@ Route::middleware(['unauthenticated'])->group(function () {
 Route::middleware(['authenticated'])->group(function () {
     Route::post('signup/complete', 'App\Http\Controllers\SignUpController@complete');
     Route::get('signout', 'App\Http\Controllers\SignInController@signout')->name('signout');
+
+    // マイページ画面
+    Route::get('my_page', 'App\Http\Controllers\MyPageController@show')->name('my_page');
 });
 
 Route::get('/', function () {
