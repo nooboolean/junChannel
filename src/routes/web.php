@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['unauthenticated'])->group(function () {
     //会員登録ページ
     Route::get('signup', 'App\Http\Controllers\SignUpController@index');
-    Route::post('signup', 'App\Http\Controllers\SignUpController@create');
+    Route::post('signup', 'App\Http\Controllers\SignUpController@confirm');
+    Route::post('signup/create', 'App\Http\Controllers\SignUpController@create');
     //ログインページ
     Route::get('signin', 'App\Http\Controllers\SignInController@index')->name('signin');
     Route::post('signin', 'App\Http\Controllers\SignInController@authenticate');
@@ -25,7 +26,6 @@ Route::middleware(['unauthenticated'])->group(function () {
 
 //ログイン済みユーザーのみアクセス可能ルート
 Route::middleware(['authenticated'])->group(function () {
-    Route::post('signup/complete', 'App\Http\Controllers\SignUpController@complete');
     Route::get('signout', 'App\Http\Controllers\SignInController@signout');
 });
 
