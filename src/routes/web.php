@@ -26,6 +26,7 @@ Route::middleware(['unauthenticated'])->group(function () {
 
 //ログイン済みユーザーのみアクセス可能ルート
 Route::middleware(['authenticated'])->group(function () {
+    Route::get('signup/complete', 'App\Http\Controllers\SignUpController@complete');
     Route::get('signout', 'App\Http\Controllers\SignInController@signout');
 });
 

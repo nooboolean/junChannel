@@ -45,6 +45,11 @@ class SignUpController extends Controller
         Log::info($user);
         // TODO :例外処理(ログイン失敗)
         Auth::guard('user')->attempt(['email' => $validatedRequest['email'], 'password' => $validatedRequest['password']]);
+        return redirect('signup/complete');
+    }
+
+    public function complete() {
+        $user = Auth::guard('user')->user();
         return view('signup.complete', $user);
     }
 }
