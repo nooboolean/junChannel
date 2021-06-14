@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\SignUpRequest;
 
+use Auth;
 
 class SignUpController extends Controller
 {
-    
+
     public function index()
     {
         return view('signup.index');
     }
 
-    public function create(SignUpRequest $request)
+    public function confirm(SignUpRequest $request)
     {
         $validatedRequest = $request->validated();
         $data = [
@@ -30,9 +31,10 @@ class SignUpController extends Controller
         return view('signup.confirm', $data);
     }
 
-    public function complete(SignUpRequest $request)
+    public function create(SignUpRequest $request)
     {
         $validatedRequest = $request->validated();
+        // TODO :例外処理(DB insert失敗)
         $user = User::create([
             'email'=>$validatedRequest['email'],
             'password'=>Hash::make($validatedRequest['password']),
@@ -41,6 +43,8 @@ class SignUpController extends Controller
         ]);
         Log::info('ユーザー登録直後のリクエストパラメータ：');
         Log::info($user);
+        // TODO :例外処理(ログイン失敗)
+        Auth::guard('user')->attempt(['email' => $validatedRequest['email'], 'password' => $validatedRequest['password']]);
         return view('signup.complete', $user);
     }
 }

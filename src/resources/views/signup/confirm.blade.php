@@ -4,8 +4,8 @@
     <h2>入力内容確認</h2>
 
     <p>以下の入力内容でよろしいですか？</p>
-    
-    <form method="POST" action="/signup/complete">
+
+    <form method="POST" action="/signup/create">
         @csrf
         <p>メールアドレス（必須）</p>
         <p>{{$email}}</p>
