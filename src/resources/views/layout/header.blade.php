@@ -23,7 +23,7 @@
                 @if ( Auth::guard('user')->check() )
                     <?php $user = Auth::guard('user')->user(); ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('my_page') }}">
+                        <a class="nav-link" href="{{ url('my_page', $user->id) }}">
                             @if (!empty($user->nickname))
                                 {{ $user->nickname }}
                             @else

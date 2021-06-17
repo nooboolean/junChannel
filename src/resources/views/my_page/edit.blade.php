@@ -44,38 +44,8 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-end">
-        <a href="{{ url('my_page/edit', $user->id) }}" class="btn btn-dark btn-lg">編集する</a>
+        <a class="btn btn-dark btn-lg">編集する</a>
     </div>
 </div>
-
-
-<table class="table">
-    <thead class="table-bordered table-sm thead-light">
-        <tr>
-            <th colspan="1">
-                作成したスレッド一覧
-            </th>
-            <th colspan="1">
-                コメントしたスレッド一覧
-            </th>
-            <th colspan="1">
-                お気に入りしたスレッド一覧
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <button type="button" class="btn btn-link">スレッド1</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-link">スレッド15</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-link">スレッド39</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
 
 @endsection

@@ -29,7 +29,9 @@ Route::middleware(['authenticated'])->group(function () {
     Route::get('signout', 'App\Http\Controllers\SignInController@signout')->name('signout');
 
     // マイページ画面
-    Route::get('my_page', 'App\Http\Controllers\MyPageController@show')->name('my_page');
+    Route::get('my_page/{userId}', 'App\Http\Controllers\MyPageController@show');
+    Route::get('my_page/edit/{userId}', 'App\Http\Controllers\MyPageController@edit');
+    Route::put('my_page/update', 'App\Http\Controllers\MyPageController@update');
 });
 
 Route::get('/', function () {
