@@ -44,7 +44,7 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-end">
-        <a href="{{ url('my_page/edit', $user->id) }}" class="btn btn-dark btn-lg">編集する</a>
+        <a href="{{ url('my_page/edit', $user->id) }}" class="btn btn-dark btn-lg">編集</a>
     </div>
 </div>
 

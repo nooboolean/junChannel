@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\MyPageUpdateRequest;
 
 class MyPageController extends Controller
 {
@@ -17,7 +18,12 @@ class MyPageController extends Controller
         return view('my_page.edit', compact('user'));
     }
 
-    public function update() {
-
+    public function update(MyPageUpdateRequest $request) {
+        $validatedRequest = $request->validated();
+        $user = User::find($validatedRequest['userId']);
+        $user->email = $validatedRequest['email'];
+        $user->nickname = $validatedRequest['nickname'];
+        $user->save();
+        return view('my_page.show', compact('user'));
     }
 }
