@@ -34,6 +34,8 @@ class MyPageUpdateRequest extends FormRequest
     public function messages()
     {
     return [
+        'userId.required' => 'フォームに不正なデータが存在します。',
+        'userId.integer' => 'フォームに不正なデータが存在します。',
         'nickname.max' => 'ニックネームは20文字以内にして下さい。',
         'nickname.string'  => '正しい形式で入力してください。',
         'email.required' => 'メールアドレスは必ず入力して下さい。',
