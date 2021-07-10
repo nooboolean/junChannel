@@ -24,6 +24,6 @@ class MyPageController extends Controller
         $user->email = $validatedRequest['email'];
         $user->nickname = $validatedRequest['nickname'];
         $user->save();
-        return view('my_page.show', compact('user'));
+        return redirect()->route('my_page.show', ['userId' => $user->id]);
     }
 }
