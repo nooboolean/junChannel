@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //ログイン済みユーザーがアクセスすると元の画面に戻る
 Route::middleware(['unauthenticated'])->group(function () {
     //会員登録ページ
-    Route::get('signup', 'App\Http\Controllers\SignUpController@index');
+    Route::get('signup', 'App\Http\Controllers\SignUpController@index')->name('signup');
     Route::post('signup', 'App\Http\Controllers\SignUpController@confirm');
     Route::post('signup/create', 'App\Http\Controllers\SignUpController@create');
     //ログインページ
@@ -27,7 +27,7 @@ Route::middleware(['unauthenticated'])->group(function () {
 //ログイン済みユーザーのみアクセス可能ルート
 Route::middleware(['authenticated'])->group(function () {
     Route::get('signup/complete', 'App\Http\Controllers\SignUpController@complete');
-    Route::get('signout', 'App\Http\Controllers\SignInController@signout');
+    Route::get('signout', 'App\Http\Controllers\SignInController@signout')->name('signout');
 });
 
 Route::get('/', function () {

@@ -4,8 +4,9 @@
 1. Docker管理の `.env` (環境変数設定ファイル)の作成
 2. Laravel管理の `.env` ファイル作成
 3. Laravelのコンテナ内で `composer install` 実行
-4. コンテナ群の起動 `docker-compose up -d` の実行
-5. DB migration の実行
+4. Laravelのコンテナ内で `npm install` 実行
+5. コンテナ群の起動 `docker-compose up -d` の実行
+6. DB migration の実行
 
 ### 1. Docker管理の `.env` (環境変数設定ファイル)の作成
 junChannelディレクトリ配下の `.env.example` を複製して `.env` ファイルを作成してください。
@@ -36,16 +37,59 @@ composer dump-autoload && \
 php artisan key:generate"
 ```
 
-### 4. コンテナ群の起動 `docker-compose up -d` の実行
+### 4. Laravelのコンテナ内で `npm install` 実行
+junChannelディレクトリ配下で、以下コマンドを実行
+```
+$ docker-compose run --rm app /bin/bash -c "cd src && npm install && \
+npm run dev"
+```
+
+### 5. コンテナ群の起動 `docker-compose up -d` の実行
 junChannelディレクトリ配下で、以下コマンドを実行
 ```
 $ docker-compose up -d
 ```
 
-### 5. DB migration の実行
+### 6. DB migration の実行
 junChannelディレクトリ配下で、以下コマンドを実行
 ```
 $ docker-compose exec app bash
 # cd src
 # php artisan migrate
+```
+
+## こんなときどうすればいい？
+### migrationファイルが追加された
+junChannelディレクトリ配下で、以下コマンドを実行
+```
+$ docker-compose exec app bash
+# cd src
+# php artisan migrate
+```
+### css/javascriptが修正された
+junChannelディレクトリ配下で、以下コマンドを実行
+(css/javascriptのコンパイル実行)
+```
+$ docker-compose exec app bash
+# cd src
+# npm run dev
+```
+### composer.jsonが修正された
+junChannelディレクトリ配下で、以下コマンドを実行
+```
+$ docker-compose exec app bash
+# cd src
+# composer install
+```
+### packeage.jsonが修正された
+junChannelディレクトリ配下で、以下コマンドを実行
+```
+$ docker-compose exec app bash
+# cd src
+# npm install
+```
+### docker-compose.yml または Dockerfileが修正された
+junChannelディレクトリ配下で、以下コマンドを実行
+```
+$ docker-compose up -d --build
 ```
