@@ -35,7 +35,7 @@ Route::middleware(['authenticated'])->group(function () {
     Route::put('my_page/update', 'App\Http\Controllers\MyPageController@update');
 
     Route::get('thread/post', 'App\Http\Controllers\ThreadController@post')->name('thread.post');
-    Route::post('thread/post', 'App\Http\Controllers\ThreadController@create')->name('thread.create');
+    Route::post('thread/create', 'App\Http\Controllers\ThreadController@create')->name('thread.create');
 });
 
 Route::get('/', function () {
@@ -47,4 +47,3 @@ Route::get('/top', function () {
 });
 
 Route::get('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@show')->name('thread.show');
-
