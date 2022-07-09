@@ -41,8 +41,16 @@
       ・コメントしたユーザのニックネームの設定
       ・誹謗中傷内容に対する注記
       ・コメント投稿後は、この画面をGETで表示させればOK --}}
-    {!! Form::open(['url' => 'thread/show/{{ $thread->id }}', 'method' => 'POST', 'files' => true]) !!}
+    {!! Form::open([url('thread/show', $thread->id), 'method' => 'POST', 'files' => true]) !!}
     {!! Form::hidden('userId', $user->id) !!}
+    {!! Form::hidden('thread_id', $thread->id) !!}
+
+    @if ($comments)
+        {!! Form::hidden('comment_number', count($comments)+1) !!}
+    @else
+        {!! Form::hidden('comment_number', 1) !!}
+    @endif
+
     <div class="h3 mt-5 mb-3">
         <div class="card">
             <div class="card-body">
@@ -65,7 +73,6 @@
                     {!! Form::submit('コメントを投稿する', ['class' => 'btn btn-dark btn-lg']) !!}
                 </div>
             </div>
-
         </div>
     </div>
     {!! Form::close() !!}

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
+use App\Models\Comment;
+
 use Auth;
 
 class ThreadController extends Controller
@@ -27,7 +29,11 @@ class ThreadController extends Controller
     //$user = User::find($userId);
     Log::info('$user', [$user]);
 
-    return view('thread.show', compact('thread', 'created_user', 'user'));
+    //このスレッドに紐づいているコメントをすべて取得
+    $comments = Comment::where('thread_id', $thread->id)->get();
+    Log::info('$comments', [$comments]);
+
+    return view('thread.show', compact('thread', 'created_user', 'user', 'comments'));
   }
 
   public function post()
@@ -55,7 +61,11 @@ class ThreadController extends Controller
       'name' => $request['name'],
       'categoryId' => $request['categoryId'],
     ];
-    //dd($data);
+
+    // echo gettype($request['createrId']), "\n";
+    // echo gettype($request['name']), "\n";
+    // echo gettype($request['categoryId']), "\n";
+
     Log::info('スレッド作成時のリクエストパラメータ：', $data);
     $thread = Thread::create([
       'creater_id' => $request['createrId'],
@@ -64,13 +74,13 @@ class ThreadController extends Controller
     ]);
     Log::info('$thread', [$thread]);
     return redirect()->route('thread.show', $thread);
-    //return redirect()->route('thread.show', ['threadId' => $thread->id]);
+    // return redirect()->route('thread.show', ['threadId' => $thread->id]);
   }
 
   public function commentPost(Request $request)
   {
-    //スレッドにコメントを投稿
     /**
+     * スレッドにコメントを投稿
      * コメントテーブルにコメントを新規追加する処理
      * ・投稿者ID
      * ・ゲストID
@@ -80,20 +90,26 @@ class ThreadController extends Controller
      * ・投稿日時
      * ・更新日時
      */
-    //dd($request);
-    // $data = [
-    //   'createrId' => $request['createrId'],
-    //   'name' => $request['name'],
-    //   'categoryId' => $request['categoryId'],
-    // ];
-    // //dd($data);
-    // Log::info('コメント投稿時のリクエストパラメータ：', $data);
-    // $thread = Thread::create([
-    //   'creater_id' => $request['createrId'],
-    //   'name' => $request['name'],
-    //   'category_id' => $request['categoryId'],
-    // ]);
-    // Log::info('$thread', [$thread]);
-    //return redirect()->route('thread.show', $thread);
+    $data = [
+      'commenter_id' => $request['userId'],
+      'guests_commenter_id' => "notGuest",
+      'thread_id' => $request['thread_id'],
+      'comment_number' => $request['comment_number'],
+      'content' => $request['content'],
+    ];
+    Log::info('コメント投稿時のリクエストパラメータ：', $data);
+
+    $comment = Comment::create([
+      'commenter_id' => $request['userId'],
+      'guests_commenter_id' => "notGuest",
+      'thread_id' => $request['thread_id'],
+      'comment_number' => $request['comment_number'],
+      'content' => $request['content'],
+    ]);
+    Log::info('$comment', [$comment]);
+
+    $threadId = $request['thread_id'];
+
+    return redirect()->route('thread.show', $threadId);
   }
 }
