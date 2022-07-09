@@ -31,7 +31,7 @@
     <table class="table">
         <thead class="thead-light">
             <tr>
-                <th colspan="2">基本情報</th>
+                <th colspan="2">会員情報</th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@
     </table>
     <div class="d-flex justify-content-between">
         <a href="{{ url('my_page', $user->id) }}" class="btn btn-dark btn-lg">戻る</a>
-        {!! Form::submit('更新', ['class' => 'btn btn-dark btn-lg']) !!}
+        {!! Form::submit('会員情報を更新', ['class' => 'btn btn-dark btn-lg']) !!}
     </div>
 </div>
 {!! Form::close() !!}
