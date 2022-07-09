@@ -6,13 +6,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Models\User;
 
 class ThreadController extends Controller
 {
   public function show($threadId)
   {
     $thread = Thread::find($threadId);
-    return view('thread.show', compact('thread'));
+    Log::info('$thread', [$thread]);
+
+
+    //DBから作成したユーザ名の取得
+    //ユーザテーブルから表示中のスレッドIDに引っかかるユーザのみを抽出
+    $created_user = User::where('id', $thread->creater_id)->first();
+    Log::info('$created_user', [$created_user]);
+    //dd($created_user);
+
+    return view('thread.show', compact('thread', 'created_user'));
   }
 
   public function post()
