@@ -47,3 +47,4 @@ Route::get('/top', function () {
 });
 
 Route::get('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@show')->name('thread.show');
+Route::post('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@commentPost')->name('comment.post');
