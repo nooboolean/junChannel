@@ -24,16 +24,46 @@
     {{-- コメント一覧 --}}
     {{-- //コメントが0件の場合 --}}
     {{-- //コメントが１以上の場合 --}}
-
     {{-- ~各コメント部分~（コメントテーブルから取得）
     ・コメント番号
-    ・コメントしたユーザのニックネームの表示
+    ・コメントしたユーザのニックネームの表示（IDした取得できない）
     ・投稿日付時刻の表示
     ・コメント内容
-    ・コメント番号押下でそのコメントに対してリプライできるように新規コメントが入力できる
+    ・コメント番号押下でそのコメントに対してリプライできるように新規コメントが入力できる（DB未搭載）
     ・いいね、badボタン（DB未搭載）
     ・通報ボタン（コメントしたユーザには非表示）
     ・削除ボタン（管理人とそのコメントをしたユーザだけ） --}}
+    <div class="h3 mt-5 mb-3">
+        @if ($comments)
+            @foreach ($comments as $comment)
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="font-weight-bold mb-4 d-flex align-items-center">
+                            {{-- <a href="#" class="mr-3 link-primary">#{{ $comment->comment_number }}</a> --}}
+                            {{-- ↑コメント引用機能のための改修をDB側に搭載できれば差し替える --}}
+                            <div class="mr-3 link-primary">#{{ $comment->comment_number }}</div>
+                            @if ($comment->guests_commenter_id === 'notGuest')
+                                <div class="mr-3">{{ $comment->commenter_nickname }}</div>
+                            @else
+                                <div class="mr-3">名無しさん</div>
+                            @endif
+                            <div class="mr-3">{{ $comment->created_at }}</div>
+                            @if ($loop->last)
+                            <div class="font-weight-normal text-secondary">（最新コメント）</div>
+                            @endif
+                        </h4>
+                        <h4 class="card-text mb-3">{{ $comment->content }} </h4>
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-text mb-3">まだコメントはありません。最初のコメントを投稿してみよう！</h4>
+                </div>
+            </div>
+        @endif
+    </div>
 
 
     {{-- コメント投稿欄 --}}
@@ -46,7 +76,7 @@
     {!! Form::hidden('thread_id', $thread->id) !!}
 
     @if ($comments)
-        {!! Form::hidden('comment_number', count($comments)+1) !!}
+        {!! Form::hidden('comment_number', count($comments) + 1) !!}
     @else
         {!! Form::hidden('comment_number', 1) !!}
     @endif

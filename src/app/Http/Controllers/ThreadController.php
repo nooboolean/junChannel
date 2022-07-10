@@ -22,16 +22,24 @@ class ThreadController extends Controller
     //ユーザテーブルから表示中のスレッドIDに引っかかるユーザのみを抽出
     $created_user = User::where('id', $thread->creater_id)->first();
     Log::info('$created_user', [$created_user]);
-    //dd($created_user);
 
     //ログイン中のユーザを取得
     $user = Auth::guard('user')->user();
-    //$user = User::find($userId);
     Log::info('$user', [$user]);
 
     //このスレッドに紐づいているコメントをすべて取得
     $comments = Comment::where('thread_id', $thread->id)->get();
     Log::info('$comments', [$comments]);
+    //このコメントオブジェクトに、コメントした人のニックネームを追加したい
+    foreach ($comments as $comment) {
+      Log::info('$comment->commenter_id', [$comment->commenter_id]);
+      //コメントIDからユーザのニックネームを取得する
+      $commenter = User::where('id', $comment->commenter_id)->first();
+      Log::info('$commenter', [$commenter]);
+      Log::info('$commenter', [$commenter->nickname]);
+      //そのユーザのニックネームをコメントオブジェクトに追加する
+      $comment->commenter_nickname = $commenter->nickname;
+    }
 
     return view('thread.show', compact('thread', 'created_user', 'user', 'comments'));
   }
@@ -61,10 +69,6 @@ class ThreadController extends Controller
       'name' => $request['name'],
       'categoryId' => $request['categoryId'],
     ];
-
-    // echo gettype($request['createrId']), "\n";
-    // echo gettype($request['name']), "\n";
-    // echo gettype($request['categoryId']), "\n";
 
     Log::info('スレッド作成時のリクエストパラメータ：', $data);
     $thread = Thread::create([
