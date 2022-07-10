@@ -89,7 +89,7 @@
             </thead>
             <tbody>
                 @if ($commented_threads)
-                    @foreach ($commented_threads as $commented_thread)
+                    @foreach ($commented_threads->unique('id') as $commented_thread)
                         <tr>
                             <td>
                                 <a href="{{ url('thread/show', $commented_thread->id) }}"
