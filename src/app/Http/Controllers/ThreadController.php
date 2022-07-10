@@ -6,13 +6,42 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Models\User;
+use App\Models\Comment;
+
+use Auth;
 
 class ThreadController extends Controller
 {
   public function show($threadId)
   {
     $thread = Thread::find($threadId);
-    return view('thread.show', compact('thread'));
+    Log::info('$thread', [$thread]);
+
+    //DBから作成したユーザ名の取得
+    //ユーザテーブルから表示中のスレッドIDに引っかかるユーザのみを抽出
+    $created_user = User::where('id', $thread->creater_id)->first();
+    Log::info('$created_user', [$created_user]);
+
+    //ログイン中のユーザを取得
+    $user = Auth::guard('user')->user();
+    Log::info('$user', [$user]);
+
+    //このスレッドに紐づいているコメントをすべて取得
+    $comments = Comment::where('thread_id', $thread->id)->get();
+    Log::info('$comments', [$comments]);
+    //このコメントオブジェクトに、コメントした人のニックネームを追加したい
+    foreach ($comments as $comment) {
+      Log::info('$comment->commenter_id', [$comment->commenter_id]);
+      //コメントIDからユーザのニックネームを取得する
+      $commenter = User::where('id', $comment->commenter_id)->first();
+      Log::info('$commenter', [$commenter]);
+      Log::info('$commenter', [$commenter->nickname]);
+      //そのユーザのニックネームをコメントオブジェクトに追加する
+      $comment->commenter_nickname = $commenter->nickname;
+    }
+
+    return view('thread.show', compact('thread', 'created_user', 'user', 'comments'));
   }
 
   public function post()
@@ -40,7 +69,7 @@ class ThreadController extends Controller
       'name' => $request['name'],
       'categoryId' => $request['categoryId'],
     ];
-    //dd($data);
+
     Log::info('スレッド作成時のリクエストパラメータ：', $data);
     $thread = Thread::create([
       'creater_id' => $request['createrId'],
@@ -49,6 +78,42 @@ class ThreadController extends Controller
     ]);
     Log::info('$thread', [$thread]);
     return redirect()->route('thread.show', $thread);
-    //return redirect()->route('thread.show', ['threadId' => $thread->id]);
+    // return redirect()->route('thread.show', ['threadId' => $thread->id]);
+  }
+
+  public function commentPost(Request $request)
+  {
+    /**
+     * スレッドにコメントを投稿
+     * コメントテーブルにコメントを新規追加する処理
+     * ・投稿者ID
+     * ・ゲストID
+     * ・スレッドID
+     * ・コメントナンバー
+     * ・コメント内容
+     * ・投稿日時
+     * ・更新日時
+     */
+    $data = [
+      'commenter_id' => $request['userId'],
+      'guests_commenter_id' => "notGuest",
+      'thread_id' => $request['thread_id'],
+      'comment_number' => $request['comment_number'],
+      'content' => $request['content'],
+    ];
+    Log::info('コメント投稿時のリクエストパラメータ：', $data);
+
+    $comment = Comment::create([
+      'commenter_id' => $request['userId'],
+      'guests_commenter_id' => "notGuest",
+      'thread_id' => $request['thread_id'],
+      'comment_number' => $request['comment_number'],
+      'content' => $request['content'],
+    ]);
+    Log::info('$comment', [$comment]);
+
+    $threadId = $request['thread_id'];
+
+    return redirect()->route('thread.show', $threadId);
   }
 }
