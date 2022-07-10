@@ -49,7 +49,7 @@
                             @endif
                             <div class="mr-3">{{ $comment->created_at }}</div>
                             @if ($loop->last)
-                            <div class="font-weight-normal text-secondary">（最新コメント）</div>
+                                <div class="font-weight-normal text-secondary">（最新コメント）</div>
                             @endif
                         </h4>
                         <h4 class="card-text mb-3">{{ $comment->content }} </h4>
@@ -59,10 +59,16 @@
         @else
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-text mb-3">まだコメントはありません。最初のコメントを投稿してみよう！</h4>
+                    <h4 class="card-text">このスレッドにまだコメントはありません。<br>最初のコメントを投稿してみよう！</h4>
                 </div>
             </div>
         @endif
+    </div>
+
+    {{-- 新着コメントを表示ボタン --}}
+    <div class="d-flex justify-content-center mt-4">
+      <a href="{{ url('thread/show', $thread->id) }}"
+        class="btn btn-dark btn-lg">新着コメントを表示</a>
     </div>
 
 
