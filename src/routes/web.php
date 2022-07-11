@@ -38,13 +38,8 @@ Route::middleware(['authenticated'])->group(function () {
     Route::post('thread/create', 'App\Http\Controllers\ThreadController@create')->name('thread.create');
 });
 
-Route::get('/', function () {
-    return view('top');
-});
-
-Route::get('/top', function () {
-    return view('top');
-});
+Route::get('/', 'App\Http\Controllers\TopController');
+Route::get('/top', 'App\Http\Controllers\TopController');
 
 Route::get('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@show')->name('thread.show');
 Route::post('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@commentPost')->name('comment.post');
