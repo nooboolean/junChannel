@@ -67,8 +67,7 @@
 
     {{-- 新着コメントを表示ボタン --}}
     <div class="d-flex justify-content-center mt-4">
-      <a href="{{ url('thread/show', $thread->id) }}"
-        class="btn btn-dark btn-lg">新着コメントを表示</a>
+        <a href="{{ url('thread/show', $thread->id) }}" class="btn btn-dark btn-lg">新着コメントを表示</a>
     </div>
 
 

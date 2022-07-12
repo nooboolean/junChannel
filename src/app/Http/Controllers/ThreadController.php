@@ -30,15 +30,21 @@ class ThreadController extends Controller
     //このスレッドに紐づいているコメントをすべて取得
     $comments = Comment::where('thread_id', $thread->id)->get();
     Log::info('$comments', [$comments]);
-    //このコメントオブジェクトに、コメントした人のニックネームを追加したい
-    foreach ($comments as $comment) {
-      Log::info('$comment->commenter_id', [$comment->commenter_id]);
-      //コメントIDからユーザのニックネームを取得する
-      $commenter = User::where('id', $comment->commenter_id)->first();
-      Log::info('$commenter', [$commenter]);
-      Log::info('$commenter', [$commenter->nickname]);
-      //そのユーザのニックネームをコメントオブジェクトに追加する
-      $comment->commenter_nickname = $commenter->nickname;
+    if ($comments->isEmpty()) {
+      Log::info('$commentsは空です');
+      $comments = null;
+    } else {
+      Log::info('$commentsは空ではありません');
+      //このコメントオブジェクトに、コメントした人のニックネームを追加したい
+      foreach ($comments as $comment) {
+        Log::info('$comment->commenter_id', [$comment->commenter_id]);
+        //コメントIDからユーザのニックネームを取得する
+        $commenter = User::where('id', $comment->commenter_id)->first();
+        Log::info('$commenter', [$commenter]);
+        Log::info('$commenter', [$commenter->nickname]);
+        //そのユーザのニックネームをコメントオブジェクトに追加する
+        $comment->commenter_nickname = $commenter->nickname;
+      }
     }
 
     return view('thread.show', compact('thread', 'created_user', 'user', 'comments'));
