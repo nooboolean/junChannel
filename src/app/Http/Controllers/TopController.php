@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Thread;
 use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
@@ -39,6 +40,13 @@ class TopController extends Controller
       Log::info('$recently_commented_threads', [$recently_commented_threads]);
     }
 
-    return view('top', compact('recently_created_threads', 'recently_commented_threads'));
+    // DBからすべてのカテゴリを取得
+    $categories = Category::get();
+    if ($categories->isEmpty()) {
+      $categories = null;
+    }
+    Log::info('$categories', [$categories]);
+
+    return view('top', compact('recently_created_threads', 'recently_commented_threads', 'categories'));
   }
 }

@@ -47,7 +47,14 @@ class ThreadController extends Controller
       }
     }
 
-    return view('thread.show', compact('thread', 'created_user', 'user', 'comments'));
+    // DBからすべてのカテゴリを取得
+    $categories = Category::get();
+    if ($categories->isEmpty()) {
+      $categories = null;
+    }
+    Log::info('$categories', [$categories]);
+
+    return view('thread.show', compact('thread', 'created_user', 'user', 'comments', 'categories'));
   }
 
   public function post()
