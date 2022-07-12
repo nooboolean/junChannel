@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,15 @@
 
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
+
 <body>
+    @yield('header')
     <div class="flex-center position-ref full-height container">
-        @yield('header')
         <div class="content">
             @yield('content')
         </div>
         @yield('footer')
     </div>
 </body>
+
 </html>
