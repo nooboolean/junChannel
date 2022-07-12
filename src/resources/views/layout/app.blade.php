@@ -17,11 +17,12 @@
 <body>
     @yield('header')
     <div class="flex-center position-ref full-height container">
-        <div class="content">
+        <div class="row justify-content-center">
+            @yield('categories_list')
             @yield('content')
         </div>
-        @yield('footer')
     </div>
+    @yield('footer')
 </body>
 
 </html>
