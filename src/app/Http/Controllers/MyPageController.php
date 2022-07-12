@@ -19,17 +19,24 @@ class MyPageController extends Controller
     //DBから作成したスレッド一覧の取得
     //スレッドテーブルから作成したユーザIDに引っかかるスレッドのみを抽出
     $created_threads = Thread::where('creater_id', $userId)->get();
-    //dd($threads);
+    if ($created_threads->isEmpty()) {
+      $created_threads = null;
+    }
 
     //DBからコメントしたスレッド一覧の取得
     $my_comments = Comment::where('commenter_id', $userId)->groupBy('thread_id')->get();
     Log::info('$my_comments', [$my_comments]);
-    $thread_ids = array();
-    foreach ($my_comments as $my_comment) {
-      Log::info('$my_comment->thread_id', [$my_comment->thread_id]);
-      $thread_ids[] = $my_comment->thread_id;
+    if ($my_comments->isEmpty()) {
+      $my_comments = null;
+      $commented_threads = null;
+    } else {
+      $thread_ids = array();
+      foreach ($my_comments as $my_comment) {
+        Log::info('$my_comment->thread_id', [$my_comment->thread_id]);
+        $thread_ids[] = $my_comment->thread_id;
+      }
+      $commented_threads = Thread::whereIn('id', $thread_ids)->get();
     }
-    $commented_threads = Thread::whereIn('id', $thread_ids)->get();
 
     //DBからお気に入りしたスレッド一覧の取得
     //先にモデルを作る
