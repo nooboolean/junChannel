@@ -14,23 +14,23 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        // $param = [
+        //   'name' => '野球',
+        //   'created_at' => '0000-00-00 00:00:00',
+        // ];
+        // DB::table('categories')->insert($param);
+        // $param = [
+        //   'name' => 'サッカー',
+        //   'created_at' => '0000-00-00 00:00:00',
+        // ];
+        // DB::table('categories')->insert($param);
+        // $param = [
+        //   'name' => 'バスケットボール',
+        //   'created_at' => '0000-00-00 00:00:00',
+        // ];
+        // DB::table('categories')->insert($param);
         $param = [
-          'name' => 'イワナ',
-          'created_at' => '0000-00-00 00:00:00',
-        ];
-        DB::table('categories')->insert($param);
-        $param = [
-          'name' => 'メンズリゼ',
-          'created_at' => '0000-00-00 00:00:00',
-        ];
-        DB::table('categories')->insert($param);
-        $param = [
-          'name' => 'アスパラ',
-          'created_at' => '0000-00-00 00:00:00',
-        ];
-        DB::table('categories')->insert($param);
-        $param = [
-          'name' => 'Twice',
+          'name' => 'NCT127',
           'created_at' => '0000-00-00 00:00:00',
         ];
         DB::table('categories')->insert($param);
