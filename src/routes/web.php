@@ -43,3 +43,5 @@ Route::get('/top', 'App\Http\Controllers\TopController');
 
 Route::get('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@show')->name('thread.show');
 Route::post('thread/show/{threadId}', 'App\Http\Controllers\ThreadController@commentPost')->name('comment.post');
+
+Route::get('category/show/{categoryId}', 'App\Http\Controllers\CategoryController@show')->name('category.show');
