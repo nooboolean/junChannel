@@ -36,7 +36,8 @@
                     @if ($recently_commented_threads)
                         @foreach ($recently_commented_threads as $recently_commented_thread)
                             <tr>
-                                <td>
+                                <td class="d-flex justify-content-start align-items-center">
+                                    <div class="ml-2">[{{ $loop->index + 1 }}]</div>
                                     <a href="{{ url('thread/show', $recently_commented_thread->id) }}"
                                         class="btn btn-link">{{ $recently_commented_thread->name }}</a>
                                 </td>
