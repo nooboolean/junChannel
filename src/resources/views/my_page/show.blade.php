@@ -66,6 +66,10 @@
                                     <div class="ml-2">[{{ $loop->index + 1 }}]</div>
                                     <a href="{{ url('thread/show', $created_thread->id) }}"
                                         class="btn btn-link">{{ $created_thread->name }}</a>
+                                    <div class="ml-2">（{{ $created_thread->count_comment }}件）</div>
+                                    <div class="ml-2">
+                                        {{ $created_thread->recently_comment_datetime->format('m月d日 H:i') }}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -97,6 +101,10 @@
                                     <div class="ml-2">[{{ $loop->index + 1 }}]</div>
                                     <a href="{{ url('thread/show', $commented_thread->id) }}"
                                         class="btn btn-link">{{ $commented_thread->name }}</a>
+                                    <div class="ml-2">（{{ $commented_thread->count_comment }}件）</div>
+                                    <div class="ml-2">
+                                        {{ $commented_thread->recently_comment_datetime->format('m月d日 H:i') }}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

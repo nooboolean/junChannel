@@ -71,6 +71,18 @@ class CategoryController extends Controller
 
         $recently_commented_threads = Thread::whereIn('id', $recently_commented_thread_ids_in_this_category)->orderByRaw('FIELD(id, ' . implode(',', $recently_commented_thread_ids_in_this_category) . ')')->take(10)->get();
         Log::info('$recently_commented_threads', [$recently_commented_threads]);
+
+        //各スレッドごとのコメント数を取得。スレッドに紐づいているコメントをすべて取得
+        foreach ($recently_commented_threads as $recently_commented_thread) {
+          $count_comment = Comment::where('thread_id', $recently_commented_thread->id)->get();
+          Log::info('$count_comment', [$count_comment]);
+          $recently_commented_thread->count_comment = count($count_comment);
+
+          $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $recently_commented_thread->id)->first();
+          Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
+          $recently_commented_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+        }
+        //dd($recently_commented_threads);
       }
     }
 

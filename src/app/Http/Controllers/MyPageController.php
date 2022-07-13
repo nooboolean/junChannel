@@ -21,6 +21,17 @@ class MyPageController extends Controller
     $created_threads = Thread::where('creater_id', $userId)->get();
     if ($created_threads->isEmpty()) {
       $created_threads = null;
+    } else {
+      //各スレッドごとのコメント数を取得。スレッドに紐づいているコメントをすべて取得
+      foreach ($created_threads as $created_thread) {
+        $count_comment = Comment::where('thread_id', $created_thread->id)->get();
+        Log::info('$count_comment', [$count_comment]);
+        $created_thread->count_comment = count($count_comment);
+
+        $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $created_thread->id)->first();
+        Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
+        $created_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+      }
     }
 
     //DBからコメントしたスレッド一覧の取得
@@ -36,6 +47,18 @@ class MyPageController extends Controller
         $thread_ids[] = $my_comment->thread_id;
       }
       $commented_threads = Thread::whereIn('id', $thread_ids)->get();
+
+      //各スレッドごとのコメント数を取得。スレッドに紐づいているコメントをすべて取得
+      foreach ($commented_threads as $commented_thread) {
+        $count_comment = Comment::where('thread_id', $commented_thread->id)->get();
+        Log::info('$count_comment', [$count_comment]);
+        $commented_thread->count_comment = count($count_comment);
+
+        $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $commented_thread->id)->first();
+        Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
+        $commented_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+      }
+      //dd($recently_commented_threads);
     }
 
     //DBからお気に入りしたスレッド一覧の取得
