@@ -38,9 +38,14 @@
                     @if ($recently_created_threads)
                         @foreach ($recently_created_threads as $recently_created_thread)
                             <tr>
-                                <td>
+                                <td class="d-flex justify-content-start align-items-center">
+                                    <div class="ml-2">[{{ $loop->index + 1 }}]</div>
                                     <a href="{{ url('thread/show', $recently_created_thread->id) }}"
                                         class="btn btn-link">{{ $recently_created_thread->name }}</a>
+                                    <div class="ml-2">（{{ $recently_created_thread->count_comment }}件）</div>
+                                    <div class="ml-2">
+                                        {{ $recently_created_thread->recently_comment_datetime->format('m月d日 H:i') }}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -69,9 +74,14 @@
                     @if ($recently_commented_threads)
                         @foreach ($recently_commented_threads as $recently_commented_thread)
                             <tr>
-                                <td>
+                                <td class="d-flex justify-content-start align-items-center">
+                                    <div class="ml-2">[{{ $loop->index + 1 }}]</div>
                                     <a href="{{ url('thread/show', $recently_commented_thread->id) }}"
                                         class="btn btn-link">{{ $recently_commented_thread->name }}</a>
+                                    <div class="ml-2">（{{ $recently_commented_thread->count_comment }}件）</div>
+                                    <div class="ml-2">
+                                        {{ $recently_commented_thread->recently_comment_datetime->format('m月d日 H:i') }}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
