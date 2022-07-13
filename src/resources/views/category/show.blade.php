@@ -14,10 +14,17 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title font-weight-bold"><span>{{ $category->name }}</span></h3>
-                    {{-- 新規スレッド作成 --}}
-                    <div class="d-flex justify-content-left mt-2">
-                        <a href="{{ url('thread/post') }}" class="btn btn-dark">新規スレッド作成</a>
+                    <div class="d-flex justify-content-start align-items-center">
+                        {{-- 新規スレッド作成 --}}
+                        <div class="d-flex justify-content-left">
+                            <a href="{{ url('thread/post') }}" class="btn btn-dark">新規スレッド作成</a>
+                        </div>
+                        {{-- このカテゴリ内のスレッド検索 --}}
+                        <form class="form-inline ml-3">
+                            <input class="form-control mr-sm-2" type="search" placeholder="カテゴリ内検索" aria-label="Search">
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
