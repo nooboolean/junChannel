@@ -1,5 +1,5 @@
 @section('header')
-    <header class="header ">
+    <header class="header sticky-top">
         <nav class="navbar navbar-dark navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand font-weight-bold" href="/top">{{ config('app.name') }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
