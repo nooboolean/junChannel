@@ -67,9 +67,12 @@
                                     <a href="{{ url('thread/show', $created_thread->id) }}"
                                         class="btn btn-link">{{ $created_thread->name }}</a>
                                     <div class="ml-2">（{{ $created_thread->count_comment }}件）</div>
-                                    <div class="ml-2">
-                                        {{ $created_thread->recently_comment_datetime->format('m月d日 H:i') }}
-                                    </div>
+                                    @if (isset($created_thread->recently_comment_datetime))
+                                        <div class="ml-2">
+                                            {{ $created_thread->recently_comment_datetime->format('m月d日 H:i') }}
+                                        </div>
+                                    @else
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -18,18 +18,22 @@ class TopController extends Controller
     $recently_created_threads = Thread::orderBy('id', 'DESC')->take(10)->get();
     if ($recently_created_threads->isEmpty()) {
       $recently_created_threads = null;
-    }else{
+    } else {
       //各スレッドごとのコメント数を取得。スレッドに紐づいているコメントをすべて取得
       foreach ($recently_created_threads as $recently_created_thread) {
         $count_comment = Comment::where('thread_id', $recently_created_thread->id)->get();
         Log::info('$count_comment', [$count_comment]);
-        $recently_created_thread->count_comment = count($count_comment);
-
-        $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $recently_created_thread->id)->first();
-        Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
-        $recently_created_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+        if ($count_comment->isEmpty()) {
+          $recently_created_thread->count_comment = 0;
+          $recently_created_thread->recently_comment_datetime = null;
+        } else {
+          $recently_created_thread->count_comment = count($count_comment);
+          $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $recently_created_thread->id)->first();
+          Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
+          $recently_created_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+        }
       }
-      //dd($recently_created_thread);
+      Log::info('$recently_created_threads', [$recently_created_threads]);
     }
 
     //DBからスレッドを最近コメントされた順にソートして取得

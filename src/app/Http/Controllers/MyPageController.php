@@ -26,11 +26,15 @@ class MyPageController extends Controller
       foreach ($created_threads as $created_thread) {
         $count_comment = Comment::where('thread_id', $created_thread->id)->get();
         Log::info('$count_comment', [$count_comment]);
-        $created_thread->count_comment = count($count_comment);
-
-        $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $created_thread->id)->first();
-        Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
-        $created_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+        if ($count_comment->isEmpty()) {
+          $created_thread->count_comment = 0;
+          $created_thread->recently_comment_datetime = null;
+        } else {
+          $created_thread->count_comment = count($count_comment);
+          $recently_comment_datetime = Comment::orderBy('id', 'DESC')->where('thread_id', $created_thread->id)->first();
+          Log::info('$recently_comment_datetime', [$recently_comment_datetime]);
+          $created_thread->recently_comment_datetime = $recently_comment_datetime->created_at;
+        }
       }
     }
 
