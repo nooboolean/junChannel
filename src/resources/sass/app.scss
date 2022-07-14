@@ -27,3 +27,9 @@
       display:block;
     }
 }
+
+//bootstrapのボタン押下時の枠線を消す
+*:focus {
+  outline: none !important;
+  box-shadow:none !important;
+}
