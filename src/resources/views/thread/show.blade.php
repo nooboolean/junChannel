@@ -108,9 +108,7 @@
                         'placeholder' => 'コメント内容を入力',
                         'rows' => '5',
                     ]) !!}
-                    <div class="d-flex justify-content-center mt-4">
-                        {!! Form::submit('コメントを投稿する', ['class' => 'btn btn-dark btn-lg']) !!}
-                    </div>
+                    v
                 </div>
             </div>
         </div>

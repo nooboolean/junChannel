@@ -1,26 +1,61 @@
-<body>
-    <h1>ログイン</h1>
+@extends('layout.app')
 
-    {{-- ログインが必要な画面に遷移しようとした際のメッセージ --}}
-    @if (!empty($authRequired))
-        <p>この先はログインが必要です</p>
-    @endif
-    {{-- ログイン失敗もしくはログインバリデーション失敗時のエラー --}}
-    @if ($errors->any() || !empty($signinError))
-        <p>メールアドレス、またはパスワードが違います。</p>
-    @endif
+@section('title', 'マイページ')
+@include('layout.header')
+@include('layout.footer')
 
-    <form method="POST" action="/signin">
-        @csrf
-        <p>メールアドレス</p>
-        <input type="text" name="email" value="{{old('email')}}">
+@section('content')
+    <div class="col-md-12">
+        <div class="mt-5 mb-5 d-flex justify-content-center">
+            <div style="width:640px;">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="h3 mt-3 mb-3">メールアドレスでログイン</div>
+                    {{-- ログインが必要な画面に遷移しようとした際のメッセージ --}}
+                    @if (!empty($authRequired))
+                        <div class="mb-3">
+                            <span class="text-danger">この先はログインが必要です</span>
+                        </div>
+                    @endif
+                    {{-- ログイン失敗もしくはログインバリデーション失敗時のエラー --}}
+                    @if ($errors->any() || !empty($signinError))
+                        <div class="mb-3">
+                            <span class="text-danger">メールアドレス、またはパスワードが違います。</span>
+                        </div>
+                    @endif
+                    {!! Form::open(['url' => '/signin', 'method' => 'post', 'files' => true]) !!}
+                    {!! Form::token() !!}
+                    <div class="form-group">
+                        {!! Form::label('inputMailAddress', 'メールアドレス') !!}
+                        {!! Form::text('email', old('email'), [
+                            'class' => 'form-control',
+                            'id' => 'inputMailAddress',
+                            'placeholder' => 'メールアドレス',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputPassword', 'パスワード') !!}
+                        {!! Form::password('password', [
+                            'class' => 'form-control',
+                            'id' => 'inputPassword',
+                            'placeholder' => 'パスワード',
+                        ]) !!}
+                    </div>
+                    {!! Form::submit('ログイン', ['class' => 'btn btn-primary mt-2']) !!}
+                    {!! Form::close() !!}
+                    <div class="mt-5">
+                        <span>アカウントをお持ちでない方</span>
+                        <div class="d-flex justify-content-center mt-1">
+                            <a href="{{ url('signup') }}" class="btn btn-dark">新規会員登録</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p>パスワード</p>
-        <input type="password" name="password" value="{{old('password')}}">
-
-        <br/>
-        <br/>
-
-        <input type="submit" value="ログイン">
-    </form>
- </body>
+    <style>
+        input {
+            width: 300px !important;
+        }
+    </style>
+@endsection
