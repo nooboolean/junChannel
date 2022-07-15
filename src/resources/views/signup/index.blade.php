@@ -1,36 +1,95 @@
-<body>
-    <h1>会員登録</h1>
-    
-    @if (count($errors) > 0)
-        <p>入力に問題があります。再入力して下さい。</p>
-    @endif
+@extends('layout.app')
 
-    <form method="POST" action="/signup">
-        @csrf
-        <p>メールアドレス（必須）</p>
-        @error('email')
-            <p>{{$message}}</p>
-        @enderror
-        <input type="text" name="email" value="{{old('email')}}">
+@section('title', 'マイページ')
+@include('layout.header')
+@include('layout.footer')
 
-        <p>パスワード（必須）</p>
-        @error('password')
-            <p>{{$message}}</p>
-        @enderror
-        <input type="password" name="password" value="{{old('password')}}">
+@section('content')
+    <div class="col-md-12">
+        <div class="mt-5 mb-5 d-flex justify-content-center">
+            <div style="width:640px;">
+                <div class="d-flex flex-column align-items-center">
 
-        <p>ニックネーム（任意）</p>
-        @error('nickname')
-            <p>{{$message}}</p>
-        @enderror
-        <input type="text" name="nickname" value="{{old('nickname')}}">
+                    <div class="h3 mt-3 mb-3">会員登録</div>
 
-        <p>アイコン（任意）</p>
-        <input type="file" name="icon_image_path" value="{{old('icon_image_path')}}">
+                    @if (count($errors) > 0)
+                        <div class="mb-3">
+                            <span class="text-danger">入力に問題があります。再入力して下さい。</span>
+                        </div>
+                    @endif
 
-        <br/>
-        <br/>
+                    {!! Form::open(['url' => '/signup', 'method' => 'post', 'files' => true]) !!}
+                    {!! Form::token() !!}
+                    <div class="form-group">
+                        {!! Form::label('inputNickname', 'ニックネーム（任意）') !!}
+                        {!! Form::text('nickname', old('nickname'), [
+                            'class' => 'form-control',
+                            'id' => 'inputNickname',
+                            'placeholder' => 'ニックネーム（任意）',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputMailAddress', 'メールアドレス') !!}
+                        {!! Form::text('email', old('email'), [
+                            'class' => 'form-control',
+                            'id' => 'inputMailAddress',
+                            'placeholder' => 'メールアドレス',
+                        ]) !!}
+                        @error('email')
+                            <div>
+                                <span class="text-danger">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputPassword', 'パスワード') !!}
+                        {!! Form::password('password', [
+                            'class' => 'form-control',
+                            'id' => 'inputPassword',
+                            'placeholder' => 'パスワード',
+                        ]) !!}
+                        @error('password')
+                            <div>
+                                <span class="text-danger">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputPassword', 'パスワード（確認）') !!}
+                        {!! Form::password('password_confirmation', [
+                            'class' => 'form-control',
+                            'id' => 'inputPassword',
+                            'placeholder' => 'パスワード（確認）',
+                        ]) !!}
+                        @error('password_confirmation')
+                            <div>
+                                <span class="text-danger">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
+                    {{-- <div class="form-group">
+                        {!! Form::label('icon_image_path', 'アイコン（任意）') !!}
+                        {!! Form::file('nickname', old('icon_image_path'), [
+                            'class' => 'form-control',
+                            'id' => 'icon_image_path',
+                            'placeholder' => 'アイコン（任意）',
+                        ]) !!}
+                    </div> --}}
+                    {!! Form::submit('次へ進む', ['class' => 'btn btn-primary mt-3']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <input type="submit">
-    </form>
- </body>
+    <style>
+        input {
+            width: 300px !important;
+        }
+
+        label {
+            width: 300px !important;
+            margin-bottom: 0px !important;
+        }
+    </style>
+@endsection

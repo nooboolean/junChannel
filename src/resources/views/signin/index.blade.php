@@ -40,7 +40,7 @@
                             'placeholder' => 'パスワード',
                         ]) !!}
                     </div>
-                    {!! Form::submit('ログイン', ['class' => 'btn btn-primary mt-2']) !!}
+                    {!! Form::submit('ログイン', ['class' => 'btn btn-primary mt-3']) !!}
                     {!! Form::close() !!}
                     <div class="mt-5">
                         <span>アカウントをお持ちでない方</span>
@@ -56,6 +56,10 @@
     <style>
         input {
             width: 300px !important;
+        }
+
+        label {
+            margin-bottom: 0px !important;
         }
     </style>
 @endsection
