@@ -1,38 +1,74 @@
-<body>
-    <h1>会員登録</h1>
+@extends('layout.app')
 
-    <h2>入力内容確認</h2>
+@section('title', 'マイページ')
+@include('layout.header')
+@include('layout.footer')
 
-    <p>以下の入力内容でよろしいですか？</p>
+@section('content')
+    <div class="col-md-12">
+        <div class="mt-5 mb-5 d-flex justify-content-center">
+            <div style="width:640px;">
+                <div class="d-flex flex-column align-items-center">
 
-    <form method="POST" action="/signup/create">
-        @csrf
-        <p>メールアドレス（必須）</p>
-        <p>{{$email}}</p>
+                    <div class="h3 mt-3 mb-3">会員登録　入力内容確認</div>
+                    <div class="mt-3 mb-5">
+                        <span>入力した内容に問題なければ、「登録」ボタンを押してください。</span>
+                    </div>
+                    {!! Form::open(['url' => '/signup/create', 'method' => 'post', 'files' => true]) !!}
+                    {!! Form::token() !!}
+                    <div class="form-group">
+                        {!! Form::label('inputNickname', 'ニックネーム（任意）') !!}
+                        {!! Form::text('nickname', $nickname, [
+                            'class' => 'form-control',
+                            'id' => 'inputNickname',
+                            'placeholder' => 'ニックネーム（任意）',
+                            'readonly',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputMailAddress', 'メールアドレス') !!}
+                        {!! Form::text('email', $email, [
+                            'class' => 'form-control',
+                            'id' => 'inputMailAddress',
+                            'placeholder' => 'メールアドレス',
+                            'readonly',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('inputPassword', 'パスワード') !!}
+                        {{-- {!! Form::password('password', [
+                            'class' => 'form-control',
+                            'id' => 'inputPassword',
+                            'placeholder' => 'パスワード',
+                            'value' => 'aaa',
+                            'readonly',
+                        ]) !!} --}}
+                        <input type="password" id="inputPassword" name="password" class="form-control" readonly
+                            value='{{ $password }}'>
+                    </div>
+                    {!! Form::hidden('password_confirmation', $password) !!}
+                    {!! Form::submit('登録', ['class' => 'btn btn-primary mt-3']) !!}
+                    <div>
+                        <a href="{{ url('signup'), $email }}" class="btn btn-secondary mt-3 back">修正</a>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p>パスワード（必須）</p>
-        <p>{{$password}}</p>
+    <style>
+        input {
+            width: 300px !important;
+        }
 
-        <p>ニックネーム（任意）</p>
-        @if ($nickname != "")
-        <p>{{$nickname}}</p>
-        @endif
+        label {
+            width: 300px !important;
+            margin-bottom: 0px !important;
+        }
 
-        <p>アイコン（任意）</p>
-        @if ($icon_image_path != "")
-        <p>{{$icon_image_path}}</p>
-        @endif
-
-        <br/>
-        <br/>
-
-
-        <input type="hidden" name="email" value={{$email}}>
-        <input type="hidden" name="password" value={{$password}}>
-        <input type="hidden" name="nickname" value={{$nickname}}>
-        <input type="hidden" name="icon_image_path" value={{$icon_image_path}}>
-
-        <input type="submit" value="確定">
-
-    </form>
- </body>
+        .back {
+            width: 300px !important;
+        }
+    </style>
+@endsection
