@@ -43,11 +43,13 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('inputPassword', 'パスワード') !!}
-                        {!! Form::password('password', [
+                        {{-- {!! Form::password('password', [
                             'class' => 'form-control',
                             'id' => 'inputPassword',
                             'placeholder' => 'パスワード',
-                        ]) !!}
+                        ]) !!} --}}
+                        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="パスワード"
+                            value='{{ old('password') }}'>
                         @error('password')
                             <div>
                                 <span class="text-danger">{{ $message }}</span>
@@ -56,11 +58,13 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('inputPassword', 'パスワード（確認）') !!}
-                        {!! Form::password('password_confirmation', [
+                        {{-- {!! Form::password('password_confirmation', [
                             'class' => 'form-control',
                             'id' => 'inputPassword',
                             'placeholder' => 'パスワード（確認）',
-                        ]) !!}
+                        ]) !!} --}}
+                        <input type="password" id="inputPassword" name="password_confirmation" class="form-control"
+                            placeholder="パスワード（確認）" value='{{ old('password') }}'>
                         @error('password_confirmation')
                             <div>
                                 <span class="text-danger">{{ $message }}</span>

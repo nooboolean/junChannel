@@ -33,6 +33,15 @@ class SignUpController extends Controller
 
   public function create(SignUpRequest $request)
   {
+
+    //入力確認画面で「修正」を押下した場合は、入力状態を保持したまま入力画面に戻る
+    $action = $request->get('action', '修正');
+    $input = $request->except('action');
+    if ($action == '修正') {
+      return redirect()->action('App\Http\Controllers\SignUpController@index')
+        ->withInput($input);
+    }
+
     $validatedRequest = $request->validated();
     // TODO :例外処理(DB insert失敗)
     $user = User::create([

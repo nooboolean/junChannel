@@ -36,20 +36,15 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('inputPassword', 'パスワード') !!}
-                        {{-- {!! Form::password('password', [
-                            'class' => 'form-control',
-                            'id' => 'inputPassword',
-                            'placeholder' => 'パスワード',
-                            'value' => 'aaa',
-                            'readonly',
-                        ]) !!} --}}
                         <input type="password" id="inputPassword" name="password" class="form-control" readonly
                             value='{{ $password }}'>
                     </div>
                     {!! Form::hidden('password_confirmation', $password) !!}
-                    {!! Form::submit('登録', ['class' => 'btn btn-primary mt-3']) !!}
                     <div>
-                        <a href="{{ url('signup'), $email }}" class="btn btn-secondary mt-3 back">修正</a>
+                        {!! Form::submit('登録', ['name' => 'action', 'class' => 'btn btn-primary mt-3']) !!}
+                    </div>
+                    <div>
+                        {!! Form::submit('修正', ['name' => 'action', 'class' => 'btn btn-secondary mt-3 back']) !!}
                     </div>
                     {!! Form::close() !!}
                 </div>
