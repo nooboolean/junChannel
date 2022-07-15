@@ -1,21 +1,44 @@
-<body>
-    <h1>会員登録完了</h1>
+@extends('layout.app')
 
-    <h2>以下の内容で確定しました。</h2>
+@section('title', 'マイページ')
+@include('layout.header')
+@include('layout.footer')
 
-    <p>メールアドレス（必須）</p>
-    <p>{{$email}}</p>
+@section('content')
+    <div class="col-md-12">
+        <div class="mt-5 mb-5 d-flex justify-content-center">
+            <div style="width:640px;">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="h3 mt-3 mb-3">会員登録完了</div>
+                    @if ($nickname != '')
+                        <div class="mt-3 mb-5">
+                            <span>{{ $nickname }}様、ご登録ありがとうございました。</span>
+                        </div>
+                    @else
+                        <div class="mt-3 mb-3">
+                            <span>{{ $email }}様、ご登録ありがとうございました。</span>
+                        </div>
+                    @endif
+                    <div>
+                        <a href="{{ url('top') }}" class="btn btn-dark top">トップへ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>ニックネーム（任意）</p>
-    @if ($nickname != "")
-    <p>{{$nickname}}</p>
-    @endif
+    <style>
+        input {
+            width: 300px !important;
+        }
 
-    <p>アイコン（任意）</p>
-    @if ($icon_image_path != "")
-    <p>{{$icon_image_path}}</p>
-    @endif
+        label {
+            width: 300px !important;
+            margin-bottom: 0px !important;
+        }
 
-    <a href="/top">トップへ</a>
-
- </body>
+        .top {
+            width: 150px !important;
+        }
+    </style>
+@endsection
