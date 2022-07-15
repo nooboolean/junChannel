@@ -35,7 +35,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('signout') }}">Signout</a>
+                            <a class="nav-link text-light" href="{{ route('signout') }}">ログアウト</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button"
