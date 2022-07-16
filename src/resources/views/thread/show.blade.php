@@ -13,8 +13,12 @@
         <div class="h3 mt-5 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title font-weight-bold mb-4"><span>{{ $thread->name }}</span></h3>
-                    <h4 class="card-text mb-3">ここにスレッド概要を表示（DBを改修予定）</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="card-text join-category">カテゴリ：{{ $category->name }}</span>
+                        <button class="btn btn-primary btn-sm">スレッドをお気に入り登録</button>
+                    </div>
+                    <h3 class="card-title font-weight-bold mt-2 mb-4"><span>{{ $thread->name }}</span></h3>
+                    <h4 class="card-text mb-3">{{ $thread->explanation }}</h4>
                     {{-- 作成ユーザ名、作成日時、属するカテゴリ（リンク付き） --}}
                     <h5 class="card-text"><img src="{{ asset('images/person.png') }}" alt="">
                         {{ $created_user->nickname }} ★ {{ $thread->created_at }}</h5>
@@ -121,4 +125,10 @@
         </div>
         {!! Form::close() !!}
     </div>
+
+    <style>
+        .join-category {
+            font-size: 16px;
+        }
+    </style>
 @endsection

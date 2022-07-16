@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGuestsTable extends Migration
+class ChangeNullableThreadExplanationThreadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateGuestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('guests', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('identify_key', 255)->index();
-            //$table->dateTime('created_at');
+        Schema::table('threads', function (Blueprint $table) {
+          $table->string('explanation')->nullable()->change();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateGuestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guests');
+        Schema::table('threads', function (Blueprint $table) {
+          $table->string('explanation', 1000)->after('name');
+        });
     }
 }
