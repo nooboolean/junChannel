@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Guest extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = ['identify_key','created_at'];
+  protected $fillable = ['identify_key'];
 }

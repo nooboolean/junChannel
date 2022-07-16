@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Guest;
 
 use Auth;
 
@@ -26,6 +27,7 @@ class ThreadController extends Controller
     //ログイン中のユーザを取得
     $user = Auth::guard('user')->user();
     Log::info('$user', [$user]);
+    //dd($user);
 
     //このスレッドに紐づいているコメントをすべて取得
     $comments = Comment::where('thread_id', $thread->id)->get();
@@ -107,26 +109,94 @@ class ThreadController extends Controller
      * ・投稿日時
      * ・更新日時
      */
-    $data = [
-      'commenter_id' => $request['userId'],
-      'guests_commenter_id' => "notGuest",
-      'thread_id' => $request['thread_id'],
-      'comment_number' => $request['comment_number'],
-      'content' => $request['content'],
-    ];
-    Log::info('コメント投稿時のリクエストパラメータ：', $data);
+    //ログイン中のユーザを取得
+    $user = Auth::guard('user')->user();
+    Log::info('$user', [$user]);
+    //ログイン中の場合、そのユーザとして投稿する
+    //未ログインの場合、ゲストとして投稿する
+    if ($user) {
+      //以下はログイン済みユーザ向けのリクエストボディ
+      $data = [
+        'commenter_id' => $request['userId'],
+        'guests_commenter_id' => "notGuest",
+        'thread_id' => $request['thread_id'],
+        'comment_number' => $request['comment_number'],
+        'content' => $request['content'],
+      ];
+      Log::info('コメント投稿時のリクエストパラメータ（ログイン済みユーザ向け）：', $data);
 
-    $comment = Comment::create([
-      'commenter_id' => $request['userId'],
-      'guests_commenter_id' => "notGuest",
-      'thread_id' => $request['thread_id'],
-      'comment_number' => $request['comment_number'],
-      'content' => $request['content'],
-    ]);
-    Log::info('$comment', [$comment]);
+      $comment = Comment::create([
+        'commenter_id' => $request['userId'],
+        'guests_commenter_id' => "notGuest",
+        'thread_id' => $request['thread_id'],
+        'comment_number' => $request['comment_number'],
+        'content' => $request['content'],
+      ]);
+      Log::info('$comment', [$comment]);
 
-    $threadId = $request['thread_id'];
+      $threadId = $request['thread_id'];
+      return redirect()->route('thread.show', $threadId);
+    } else {
+      //クッキーからゲスト用keyを取得して、そのkeyでゲストテーブルからゲストIDを取得する。
+      //クッキーからゲスト用keyを取得できなかった場合は、別のゲストとみなし、新しいゲストkeyを発行して、ゲストテーブルに新しいゲストを追加する。
+      //コメント投稿成功後に利用ユーザのPCのクッキーに保存させる。
+      //次回のコメントからはそのゲストkeyを取得してゲストIDを取得し、コメントさせる。
+      $guest_user = null;
+      if ($request->hasCookie('identify_key')) {
+        Log::info('クッキーを持っているユーザー');
+        $identify_key = $request->cookie('identify_key');
+        //ゲストテーブルからゲスト用keyに引っかかるゲストIDを抽出
+        $guest_user = Guest::where('identify_key', $identify_key)->first();
+        Log::info('$guest_user', [$guest_user]);
+      } else {
+        Log::info('クッキーを持っていないユーザー');
+        //別のゲストとみなし、新しいゲストkeyを発行して、ゲストテーブルに新しいゲストを追加する。
+        for ($i = 0; $i < 5; $i++) {
+          $identify_key = randomSring(36); //ランダム文字列生成
+          $exists = Guest::where('identify_key', $identify_key)->exists(); //被ってはいけないのでDBに存在チェック
+          if (!$exists) {
+            $guest_user = Guest::create([
+              'identify_key' => $identify_key,
+            ]);
+            Log::info('$guest_user', [$guest_user]);
+            break;
+          }
+          if ($i === 4) {
+            Log::alert('正しくゲストが作成できませんでした');
+            throw new \Exception('正しくゲストが作成できませんでした');
+          }
+        }
+        //ゲストテーブルからゲスト用keyに引っかかるゲストIDを抽出
+        $guest_user = Guest::where('identify_key', $identify_key)->first();
+        Log::info('$guest_user', [$guest_user]);
+      }
+      $data = [
+        'commenter_id' => 26, //ゲスト用のユーザID
+        'guests_commenter_id' => $guest_user->identify_key, //ゲスト用key
+        'thread_id' => $request['thread_id'],
+        'comment_number' => $request['comment_number'],
+        'content' => $request['content'],
+      ];
+      Log::info('コメント投稿時のリクエストパラメータ（ゲストユーザ向け）：', $data);
 
-    return redirect()->route('thread.show', $threadId);
+      $comment = Comment::create([
+        'commenter_id' => 26, //ゲスト用のユーザID
+        'guests_commenter_id' => $guest_user->identify_key, //ゲスト用key
+        'thread_id' => $request['thread_id'],
+        'comment_number' => $request['comment_number'],
+        'content' => $request['content'],
+      ]);
+      Log::info('$comment', [$comment]);
+
+      $threadId = $request['thread_id'];
+      $response = redirect()->route('thread.show', $threadId);
+      $response->cookie('identify_key', $identify_key);
+      return $response;
+    }
   }
+}
+
+function randomSring($length)
+{
+  return substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789-'), 0, $length - 1);
 }
