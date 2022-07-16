@@ -16,7 +16,7 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('identify_key', 255)->index();
-            $table->dateTime('created_at');
+            //$table->dateTime('created_at');
         });
     }
 
