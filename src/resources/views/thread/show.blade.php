@@ -108,7 +108,6 @@
                         'placeholder' => 'コメント内容を入力',
                         'rows' => '5',
                     ]) !!}
-                    v
                 </div>
             </div>
         </div>
