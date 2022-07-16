@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = ['creater_id','name','category_id'];
+  protected $fillable = ['creater_id', 'name', 'explanation', 'category_id'];
 }

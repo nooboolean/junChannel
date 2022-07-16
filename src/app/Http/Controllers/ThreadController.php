@@ -9,6 +9,7 @@ use App\Models\Thread;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Guest;
+use App\Http\Requests\ThreadRequest;
 
 use Auth;
 
@@ -69,7 +70,7 @@ class ThreadController extends Controller
     return view('thread.post', compact('categories'));
   }
 
-  public function create(Request $request)
+  public function create(ThreadRequest $request)
   {
     //DBにスレッドを登録
     /**
@@ -81,18 +82,20 @@ class ThreadController extends Controller
      * 更新日時
      * 更新理由
      */
-    //dd($request);
+    $validatedRequest = $request->validated();
     $data = [
       'createrId' => $request['createrId'],
-      'name' => $request['name'],
-      'categoryId' => $request['categoryId'],
+      'name' => $validatedRequest['name'],
+      'explanation' => $validatedRequest['explanation'],
+      'categoryId' => $validatedRequest['categoryId'],
     ];
-
     Log::info('スレッド作成時のリクエストパラメータ：', $data);
+    //dd($data);
     $thread = Thread::create([
       'creater_id' => $request['createrId'],
-      'name' => $request['name'],
-      'category_id' => $request['categoryId'],
+      'name' => $validatedRequest['name'],
+      'explanation' => $validatedRequest['explanation'],
+      'category_id' => $validatedRequest['categoryId'],
     ]);
     Log::info('$thread', [$thread]);
     return redirect()->route('thread.show', $thread);
