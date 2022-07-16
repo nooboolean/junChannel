@@ -53,10 +53,10 @@
                         <td>メールアドレス</td>
                         <td>{!! Form::text('email', $user->email, ['class' => 'form-control', 'placeholder' => 'メールアドレス']) !!}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>アイコン画像</td>
                         <td>{!! Form::file('image') !!}</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="d-flex justify-content-between">

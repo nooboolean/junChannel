@@ -38,10 +38,10 @@
                         <td>メールアドレス</td>
                         <td>{{ $user->email }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>アイコン画像</td>
                         <td>{{ $user->icon_image_path }}</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
